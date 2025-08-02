@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Back to Home</a>
+        </nav>
+    </header>
+    <section id="signup">
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+            <div id="error-messages"></div>
+            <label for="signup-username">Username (letters and spaces only):</label>
+            <input type="text" id="signup-username" name="signup-username" placeholder="e.g., John Doe" required>
+            <label for="signup-email">Email:</label>
+            <input type="email" id="signup-email" name="signup-email" placeholder="e.g., user@domain.com" required>
+            <label for="signup-password">Password:</label>
+            <input type="password" id="signup-password" name="signup-password" placeholder="At least 8 characters" required>
+            <button type="submit">Sign Up</button>
+        </form>
+    </section>
+    <footer>
+        <p>© 2025 [Your Name]. All rights reserved.</p>
+    </footer>
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission for validation
+
+            // Get form inputs
+            const usernameInput = document.getElementById('signup-username');
+            const emailInput = document.getElementById('signup-email');
+            const passwordInput = document.getElementById('signup-password');
+            const errorMessages = document.getElementById('error-messages');
+
+            // Clear previous error messages
+            if (errorMessages) {
+                errorMessages.innerHTML = '';
+            } else {
+                const newErrorDiv = document.createElement('div');
+                newErrorDiv.id = 'error-messages';
+                newErrorDiv.style.color = 'red';
+                newErrorDiv.style.marginBottom = '1rem';
+                document.getElementById('signup-form').prepend(newErrorDiv);
+            }
+
+            let errors = [];
+
+            // Validate username (letters and spaces only, 2-50 characters)
+            const usernameRegex = /^[a-zA-Z\s]{2,50}$/;
+            if (!usernameRegex.test(usernameInput.value.trim())) {
+                errors.push('Username must be 2-50 characters, letters and spaces only (e.g., John Doe).');
+            }
+
+            // Validate email structure
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value.trim())) {
+                errors.push('Please enter a valid email address (e.g., user@domain.com).');
+            }
+
+            // Validate password (not empty, at least 8 characters)
+            if (passwordInput.value.length === 0) {
+                errors.push('Password cannot be empty.');
+            } else if (passwordInput.value.length < 8) {
+                errors.push('Password must be at least 8 characters long.');
+            }
+
+            // Display errors or submit form
+            if (errors.length > 0) {
+                errorMessages.innerHTML = errors.join('<br>');
+            } else {
+                // Simulate form submission (replace with actual submission logic)
+                alert('Signup successful!');
+                this.reset(); // Reset form after successful validation
+            }
+        });
+    </script>
+</body>
+</html>
